@@ -72,7 +72,36 @@ int Game::LongestDimension(const std::vector<std::vector<std::string>>& fieldVec
 
 void Game::NextStage()
 {
+	std::vector<std::vector<Cell>> actualGameVector = mGame;
+	for (int i = 0; i < mGame.size(); i++)
+	{
+		for (int j = 0; j < mGame[i].size(); j++)
+		{
+			int cellsAlive = 0;
 
+			for (int k = i - 1; k < i + 2; k++)
+			{
+				for (int l = j - 1; l < j + 2; l++)
+				{
+					if (!((k < 0) || (l < 0) || (k == mGame.size()) || (l == mGame[i].size()) || (k == i && l == j)))
+					{
+						if (mGame[k][l].GetIsAlive() == true)
+							cellsAlive++;
+					}
+				}
+			}
+
+			if ((2 > cellsAlive) || (3 < cellsAlive) && (mGame[i][j].GetIsAlive() == true))
+			{
+				actualGameVector[i][j].SetIsAlive(false);
+			}
+			else if ((cellsAlive == 3) && (mGame[i][j].GetIsAlive() == false))
+			{
+				actualGameVector[i][j].SetIsAlive(true);
+			}
+		}
+	}
+	this->setGame(actualGameVector);
 }
 
 std::vector<std::vector<Cell>> Game::getGame() const
