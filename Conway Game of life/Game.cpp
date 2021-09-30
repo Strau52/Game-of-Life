@@ -164,6 +164,15 @@ void Game::GenerateGame(const int& aEdge, int bEdge, const float& probabilityOfA
 
 std::ostream& operator<<(std::ostream& os, const Game& rhs)
 {
+	for (int i = 0; i < rhs.getGame().size(); i++)
+	{
+		for (int j = 0; j < rhs.getGame()[i].size(); j++)
+		{
+			rhs.getGame()[i][j].GetIsAlive() ? os << "X" : os << "-";
+		}
+		os << std::endl;
+	}
+	os << "PRESS ENTER FOR THE NEXT STAGE" << std::endl;
 
 	return os;
 }
