@@ -52,7 +52,22 @@ Game::Game(const int& height, const int& width, const int& top, const int& left,
 
 int Game::LongestDimension(const std::vector<std::vector<std::string>>& fieldVector)
 {
-
+	if (fieldVector.size() >= 1)
+	{
+		std::vector<std::string> max = fieldVector[0];
+		if (fieldVector.size() >= 2)
+		{
+			for (int i = 1; i < fieldVector.size(); i++)
+			{
+				if (fieldVector[i].size() > max.size())
+				{
+					max = fieldVector[i];
+				}
+			}
+		}
+		return max.size();
+	}
+	else return 0;
 }
 
 void Game::NextStage()
