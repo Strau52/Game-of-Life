@@ -2,27 +2,52 @@
 
 Game::Game(const int& aEdge)
 {
-
+	GenerateGame(aEdge, 0, 0);
 }
 
 Game::Game(const int& aEdge, const int& bEdge)
 {
-
+	GenerateGame(aEdge, bEdge, 0);
 }
 
 Game::Game(const int& aEdge, const float& probabilityOfALivingCell)
 {
-
+	GenerateGame(aEdge, 0, probabilityOfALivingCell);
 }
 
 Game::Game(const int& aEdge, const int& bEdge, const float& probabilityOfALivingCell)
 {
-
+	GenerateGame(aEdge, bEdge, probabilityOfALivingCell);
 }
 
 Game::Game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<std::string>>& fieldVector)
 {
+	int topCounter = -1;
+	for (int i = 0; i < width; i++)
+	{
+		int leftCounter = -1;
+		std::vector<Cell> actualCell;
+		if (i >= top - 1)
+			topCounter++; //This will determine which vector we are looking in the big vector.
 
+		for (int j = 0; j < height; j++)
+		{
+			Cell tempCell = Cell();
+			if (j >= left - 1)
+				leftCounter++;
+
+			int longest = LongestDimension(fieldVector);
+			if ((topCounter >= 0) && (leftCounter >= 0) && (topCounter < fieldVector.size()) && (leftCounter < longest))
+			{
+				if (fieldVector[topCounter][leftCounter] == "X" || fieldVector[topCounter][leftCounter] == "x") // If we are int he top left space we check the state of the cell.
+				{
+					tempCell.SetIsAlive(true);
+				}
+			}
+			actualCell.push_back(tempCell);
+		}
+		mGame.push_back(actualCell);
+	}
 }
 
 int Game::LongestDimension(const std::vector<std::vector<std::string>>& fieldVector)
@@ -91,10 +116,6 @@ void Game::GenerateGame(const int& aEdge, int bEdge, const float& probabilityOfA
 		}
 		mGame.push_back(gameField);
 	}
-}
-			}
-
-				actualCell.SetIsAlive(true);
 }
 
 std::ostream& operator<<(std::ostream& os, const Game& rhs)
