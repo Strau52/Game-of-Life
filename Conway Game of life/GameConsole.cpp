@@ -7,7 +7,26 @@ GameConsole::GameConsole()
 
 void GameConsole::Write()
 {
-
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    do
+    {
+        system("CLS");
+        mLivingCells = 0;
+        std::cout << "Generation: " << (mCounter + 1) << std::endl;
+        std::cout << mGame;
+        for (int i = 0; i < mGame.getGame().size(); i++)
+        {
+            for (int j = 0; j < mGame.getGame()[i].size(); j++)
+            {
+                if (mGame.getGame()[i][j].GetIsAlive() == true) { mLivingCells++; }
+            }
+        }
+        mGame.NextStage();
+        mCounter++;
+        do
+        {
+        } while (std::cin.get() != '\n');
+    } while ((mCounter < 100) && mLivingCells > 0);
 }
 
 void GameConsole::MainMenu()

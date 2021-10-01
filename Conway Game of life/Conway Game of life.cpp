@@ -1,6 +1,8 @@
-#include <iostream>
+#include "GameConsole.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    GameConsole cons;
+    cons.MainMenu();
+    cons.Write();
 }
